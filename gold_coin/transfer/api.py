@@ -40,7 +40,7 @@ class TransferMaker:
 
         try:
             tx_hash, token_id = parity.transfer(address, coin_weight, coin.secret_code, coin.purchase_date,
-                                                coin.country, coin.certified_assayer, coin.public_code)
+                                                coin.country)
         except ParityInterfaceException as err:
             raise ValidationError(detail=str(err))
 
