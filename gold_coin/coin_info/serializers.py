@@ -49,6 +49,6 @@ class TokenInfoSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         result = super().to_representation(instance)
-        # result['duc_count'] = int(instance.token_type * instance.gold_price * instance.duc_value / DUC_USD_RATE)
-        result['duc_count'] = instance.token_type
+        result['duc_count'] = int(instance.token_type * instance.gold_price * instance.duc_value / DUC_USD_RATE)
+        # result['duc_count'] = instance.token_type
         return result
