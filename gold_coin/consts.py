@@ -5,4 +5,4 @@ DECIMALS = {
     'DUCX': 10 ** 18,
 }
 
-DUC_USD_RATE = 0.05
+DUC_USD_RATE = 0.06
