@@ -1,10 +1,14 @@
+import json
+import requests
 import datetime
+
 from rest_framework.exceptions import ValidationError
 
 from gold_coin.transfer.models import DucatusTransfer, ErcTransfer
 from gold_coin.litecoin_rpc import DucatuscoreInterface, DucatuscoreInterfaceException
 from gold_coin.parity_interface import ParityInterface, ParityInterfaceException
-from gold_coin.consts import DUC_USD_RATE, DECIMALS
+from gold_coin.consts import DECIMALS
+from gold_coin.settings import RATES_API_URL
 
 
 class TransferMaker:
@@ -16,7 +20,8 @@ class TransferMaker:
     @staticmethod
     def duc_transfer(coin):
         rpc = DucatuscoreInterface()
-        amount = int(coin.token_type * coin.gold_price * coin.duc_value / DUC_USD_RATE) * DECIMALS['DUC']
+        duc_usd_rate = json.loads(requests.get(RATES_API_URL.format(fsym='DUC', tsyms='USD')).content).get('USD')
+        amount = int(coin.token_type * coin.gold_price * coin.duc_value / duc_usd_rate) * DECIMALS['DUC']
         # amount = coin.token_type * DECIMALS['DUC']
         address = coin.ducatus_address
 
