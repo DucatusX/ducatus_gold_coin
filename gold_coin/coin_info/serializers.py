@@ -1,9 +1,12 @@
+import json
+import requests
+
 from rest_framework import serializers
 from rest_framework.exceptions import PermissionDenied, ValidationError, NotFound
 
 from gold_coin.coin_info.models import TokenInfo
 from gold_coin.transfer.models import DucatusTransfer, ErcTransfer
-from gold_coin.consts import DUC_USD_RATE
+from gold_coin.settings import RATES_API_URL
 
 
 class DucatusTransferSerializer(serializers.ModelSerializer):
@@ -49,6 +52,7 @@ class TokenInfoSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         result = super().to_representation(instance)
-        result['duc_count'] = int(instance.token_type * instance.gold_price * instance.duc_value / DUC_USD_RATE)
+        duc_usd_rate = json.loads(requests.get(RATES_API_URL.format(fsym='DUC', tsyms='USD')).content).get('USD')
+        result['duc_count'] = int(instance.token_type * instance.gold_price * instance.duc_value / duc_usd_rate)
         # result['duc_count'] = instance.token_type
         return result
