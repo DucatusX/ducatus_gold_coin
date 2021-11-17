@@ -20,9 +20,11 @@ class TransferMaker:
     @staticmethod
     def duc_transfer(coin):
         rpc = DucatuscoreInterface()
-        duc_usd_rate = json.loads(requests.get(RATES_API_URL.format(fsym='DUC', tsyms='USD')).content).get('USD')
-        amount = int(coin.token_type * coin.gold_price * coin.duc_value / duc_usd_rate) * DECIMALS['DUC']
-        # amount = coin.token_type * DECIMALS['DUC']
+        # duc_usd_rate = json.loads(requests.get(RATES_API_URL.format(fsym='DUC', tsyms='USD')).content).get('USD')
+        # amount = int(coin.token_type * coin.gold_price * coin.duc_value / duc_usd_rate) * DECIMALS['DUC']
+        # # amount = coin.token_type * DECIMALS['DUC']
+        amount = round(coin.duc_value * DECIMALS['DUC'])
+
         address = coin.ducatus_address
 
         try:
