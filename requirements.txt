@@ -36,7 +36,7 @@ netaddr==0.7.19
 packaging==20.3
 parsimonious==0.8.1
 pika==1.1.0
-protobuf==3.11.3
+protobuf==3.15.0
 psycopg2-binary==2.8.4
 pycryptodome==3.9.7
 pyparsing==2.4.6
